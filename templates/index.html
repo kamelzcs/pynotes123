@@ -8,7 +8,7 @@ $def with (notes)
     <link rel="stylesheet" href="/resources/demos/style.css">
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="static/js/datepicker.js"></script>
+    <script type="text/javascript" src="/static/js/datepicker.js"></script>
     <script type="text/javascript">
     
       // Load the Visualization API and the piechart package.
@@ -89,23 +89,17 @@ $for note in notes:
     <p>$note.actualDate <span style="color: red">$note.expectedDate</span></p>
 
 <h2>add a date</h2>
-<form method="post" action="/note">
+<form id=form method="post" action="/note">
 <p>Year  
-<select name="year" size="1" id="year">
- $for i in range(2014,2023): 
-	<option value=$i>$i</option>
-</select> 
+<input name="year" size="1" id="year">
+</input> 
 Month 
-<select name="month" size="1" id="month">
- $for i in range(1,13): 
-	<option value=$i>$i</option>
-</select>
+<input name="month" size="1" id="month">
+</input>
 
 Date 
-<select name="day" size="1" id="day">
- $for i in range(1,32): 
-	<option value=$i>$i</option>
-</select> 
+<input name="day" size="1" id="day">
+</input> 
 <button type="submit">submit</button>
 </p>
 <p>Date: <input type="text" id="datepicker"></p>
