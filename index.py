@@ -35,9 +35,9 @@ class task:
 								subject="Probability I will come in four days",
 								body="""
 				Dear Si:
-				
+
 				Wish you all the best.
-				
+
 				Yours,Shuai
 				""")
 		return web.seeother('/')
@@ -49,13 +49,13 @@ class task2:
 								subject="Probability I will come in four days",
 								body="""
 				Dear Si:
-				
+
 				Wish you all the best.
-				
+
 				Yours,Shuai
 				""")
 				return web.seeother('/')
-				
+
 class index:
 	def GET(self):
 		return render.index(notes)
@@ -65,7 +65,7 @@ class note:
 		content = web.input()
 		note = Note()
 		note.actualDate =date(int(content.year),int(content.month),int(content.day))
-		computes=[0.3,0.2,0.1]
+		computes=[0.3,0.1,0.1]
 		expectedSum=0
 		tp=notes.count()
 		if notes.count() >=4:
@@ -74,8 +74,8 @@ class note:
 					d=notes[i].actualDate-notes[i+1].actualDate
 					expectedSum=expectedSum+computes[i]*int(d.days)
 				d=note.actualDate-notes[0].actualDate
-				expectedSum=expectedSum+0.4*(d.days)
-			
+				expectedSum=expectedSum+0.5*(d.days)
+
 		elif notes.count()>=1:
 				for i in range(notes.count()-1):
 					d=notes[i].actualDate-notes[i+1].actualDate
@@ -87,7 +87,7 @@ class note:
 		else:
 			expectedSum=30
 
-		
+
 		temp=timedelta(days=expectedSum)
 		note.expectedDate=note.actualDate+temp
 		note.put()
@@ -97,13 +97,13 @@ class source:
     def GET(self):
         web.header('Content-Type', 'text/plain')
         return (
-          '## index.py\n\n' + 
-          file('index.py').read() + 
-          '\n\n## templates/index.html\n\n' + 
+          '## index.py\n\n' +
+          file('index.py').read() +
+          '\n\n## templates/index.html\n\n' +
 		  file('templates/index.html').read()+
-		  '\n\n## app.yaml\n\n' + 
+		  '\n\n## app.yaml\n\n' +
           file('app.yaml').read()+
-		  '\n\n## cron.yaml\n\n' + 
+		  '\n\n## cron.yaml\n\n' +
           file('cron.yaml').read()
         )
 
