@@ -1,0 +1,35 @@
+$def with (notes)
+<h1>The Rhapsody of Life</h1>
+
+<h2>last 10 times</h2>
+
+$for note in notes:
+    <p>$note.actualDate <span style="color: red">$note.expectedDate</span></p>
+
+<h2>add a date</h2>
+<form method="post" action="/note">
+<p>Year  
+<select name="year" size="1" id="year">
+ $for i in range(2011,2013): 
+	<option value=$i>$i</option>
+</select> 
+Month 
+<select name="month" size="1" id="month">
+ $for i in range(1,13): 
+	<option value=$i>$i</option>
+</select>
+
+Date 
+<select name="day" size="1" id="day">
+ $for i in range(1,32): 
+	<option value=$i>$i</option>
+</select> 
+<button type="submit">submit</button>
+</p>
+<h2>about this site</h2>
+
+<p>It's a website specially for U. <a href="/source">View the source.</a></p>
+
+<address>
+  <a href="http://hi.baidu.com/kamelzcs/">Kamel</a> all rights reserved since 2011.
+</address>

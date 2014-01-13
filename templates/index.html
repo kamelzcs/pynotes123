@@ -1,0 +1,127 @@
+$def with (notes)
+
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    
+      // Load the Visualization API and the piechart package.
+        google.load("visualization", "1", {packages:["corechart"]});
+      
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+
+      // Callback that creates and populates a data table, 
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+		// Create and populate the data table.
+		var data = new google.visualization.DataTable();
+		var totalNum=$notes.count();
+		var actualDate=new Array(10);
+		var expectedDate=new Array(10);
+		var index=0;
+			
+		$for note in notes:
+			actualDate[index]=new Date($note.actualDate.year,$note.actualDate.month,$note.actualDate.day);
+			expectedDate[index]=new Date($note.expectedDate.year,$note.expectedDate.month,$note.expectedDate.day);
+			actualDate[index].setMonth(actualDate[index].getMonth()-1);
+			expectedDate[index].setMonth(expectedDate[index].getMonth()-1);
+			index=index+1;
+		var raw_data=new Array();
+		raw_data[0]=new Array();
+		raw_data[0][0]='Gap';
+		raw_data[1]=new Array();
+		raw_data[1][0]='Bias';
+		for(var i=1;i<index;++i)
+		{
+			raw_data[0][i]=parseInt(Math.abs(actualDate[i]-actualDate[i-1])/1000/60/60/24);
+			raw_data[1][i]=parseInt(Math.abs(expectedDate[i]-actualDate[i-1])/1000/60/60/24);
+		}
+  
+		var years = new Array();
+		for(var i=1;i<index;++i)
+		{
+			var month=actualDate[i].getMonth()+1;
+			years[i-1]=actualDate[i].getFullYear()+'-'+month+'-'+actualDate[i].getDate();
+		}
+                  
+		data.addColumn('string', 'Date');
+  for (var i = 0; i  < raw_data.length; ++i) {
+    data.addColumn('number', raw_data[i][0]);    
+  }
+  
+  data.addRows(years.length);
+
+  for (var j = 0; j < years.length; ++j) {    
+    data.setValue(j, 0, years[j].toString());    
+  }
+  for (var i = 0; i  < raw_data.length; ++i) {
+    for (var j = 1; j  < raw_data[i].length; ++j) {
+      data.setValue(j-1, i+1, raw_data[i][j]);    
+    }
+  }
+  var stepLen=100;
+  // Create and draw the visualization.
+  new google.visualization.ColumnChart(document.getElementById('chart_div')).
+      draw(data,
+           {title:"ISee", 
+            width:stepLen*index, height:400,
+            hAxis: {title: "Date"}}
+      );
+    }
+    </script>
+  </head>
+<table border="0" width="100%" cellpadding="10">
+<tr>
+<td width="40%" valign="top">
+<h1>The Rhapsody of Life</h1>
+<h2>last 10 times</h2>
+
+$for note in notes:
+    <p>$note.actualDate <span style="color: red">$note.expectedDate</span></p>
+
+<h2>add a date</h2>
+<form method="post" action="/note">
+<p>Year  
+<select name="year" size="1" id="year">
+ $for i in range(2013,2023): 
+	<option value=$i>$i</option>
+</select> 
+Month 
+<select name="month" size="1" id="month">
+ $for i in range(1,13): 
+	<option value=$i>$i</option>
+</select>
+
+Date 
+<select name="day" size="1" id="day">
+ $for i in range(1,32): 
+	<option value=$i>$i</option>
+</select> 
+<button type="submit">submit</button>
+</p>
+<h2>about this site</h2>
+
+<p>It's a website specially for U. <a href="/source">View the source.</a></p>
+
+<address>
+  <a href="http://hi.baidu.com/kamelzcs/">Kamel</a> all rights reserved since 2011.
+</address>
+</td>
+
+<td width="60%" valign="top">
+  <body>
+<!--Div that will hold the pie chart-->
+    <div id="chart_div" style="width:400; height:300"></div>
+  </body>
+</td>
+
+</tr>
+</table>
+
+  
+  
+</html>
