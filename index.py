@@ -37,7 +37,7 @@ class task:
 				Dear Si:
 
 				Wish you all the best.
-
+                http://pynotes123.appspot.com
 				Yours,Shuai
 				""")
 		return web.seeother('/')
