@@ -65,7 +65,7 @@ class note:
 		content = web.input()
 		note = Note()
 		note.actualDate =date(int(content.year),int(content.month),int(content.day))
-		computes=[0.3,0.1,0.1]
+		computes=[0.2,0.1,0.1]
 		expectedSum=0
 		tp=notes.count()
 		if notes.count() >=4:
@@ -74,7 +74,7 @@ class note:
 					d=notes[i].actualDate-notes[i+1].actualDate
 					expectedSum=expectedSum+computes[i]*int(d.days)
 				d=note.actualDate-notes[0].actualDate
-				expectedSum=expectedSum+0.5*(d.days)
+				expectedSum=expectedSum+0.6*(d.days)
 
 		elif notes.count()>=1:
 				for i in range(notes.count()-1):
@@ -88,6 +88,7 @@ class note:
 			expectedSum=30
 
 
+		expectedSum=min(expectedSum,40)
 		temp=timedelta(days=expectedSum)
 		note.expectedDate=note.actualDate+temp
 		note.put()
