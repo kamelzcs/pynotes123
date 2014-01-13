@@ -4,5 +4,13 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /.*
+- url: /js
+  static_dir: static/js
+  expiration: 10000d
+
+- url: /static
+  static_dir: static
+
+- url: /
   script: index.py
+
