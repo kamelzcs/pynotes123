@@ -99,7 +99,6 @@ class source:
         web.header('Content-Type', 'text/plain')
         return (
           '## index.py\n\n' +
-          file('index.py').read() +
           '\n\n## templates/index.html\n\n' +
 		  file('templates/index.html').read()+
 		  '\n\n## app.yaml\n\n' +
